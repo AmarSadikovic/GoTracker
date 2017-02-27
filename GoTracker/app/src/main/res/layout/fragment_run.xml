@@ -1,13 +1,61 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="se.mah.af6260.gotracker.RunFrag">
+    tools:context="se.mah.af6260.gotracker.RunFrag"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <fragment
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="350dp"
+        tools:ignore="RtlHardcoded" />
 
-</FrameLayout>
+    <TextView
+        android:text="Activity : Running"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvActivity"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
+    android:text="Distance : 0km"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tvDistance"
+    android:textColor="@android:color/black"
+    android:textSize="20sp" />
+
+    <TextView
+        android:text="Time : 00:00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTime"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+    <TextView
+        android:text="Average speed : 0km/h"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSpeed"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+    <TextView
+        android:text="Steps taken : 0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSteps"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <Button
+        android:text="Stop run"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:textAllCaps="false"/>
+
+</LinearLayout>
