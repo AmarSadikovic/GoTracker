@@ -17,7 +17,7 @@ import org.w3c.dom.Text;
  */
 public class StartFrag extends Fragment {
 
-    private Button btnStart, btnSessions, btnMap;
+    private Button btnStart, btnSessions, btnMap, btnStartRun;
     private Button btnRun, btnWalk, btnBicycle;
     private TextView tvGps, tvStepDetecter;
 
@@ -31,7 +31,8 @@ public class StartFrag extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         btnStart = (Button)view.findViewById(R.id.btnStart);
-        btnStart.setOnClickListener(new View.OnClickListener() {
+        btnStartRun = (Button)view.findViewById(R.id.btnStartRun);
+        btnStartRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((MainActivity)getActivity()).setFragment(new RunFrag(), true);
