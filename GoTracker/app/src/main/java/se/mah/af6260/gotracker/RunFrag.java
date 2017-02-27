@@ -6,9 +6,13 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 /**
@@ -35,5 +39,8 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
+        LatLng latLng =  ((MainActivity)getActivity()).getLocation(getActivity(), getActivity());
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f));
+        map.addMarker(new MarkerOptions().position(latLng).title("My position"));
     }
 }
