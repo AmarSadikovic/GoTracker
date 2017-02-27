@@ -2,7 +2,7 @@ package se.mah.af6260.gotracker;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +31,12 @@ public class StartFrag extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         btnStart = (Button)view.findViewById(R.id.btnStart);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).setFragment(new RunFrag(), true);
+            }
+        });
         btnSessions = (Button)view.findViewById(R.id.btnSessions);
         btnMap = (Button)view.findViewById(R.id.btnMap);
 

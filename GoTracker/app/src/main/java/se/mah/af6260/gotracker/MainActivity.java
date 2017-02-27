@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
         serviceIntent = new Intent(this, RunService.class);
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
         Toast.makeText(this, "Step Detector Service bound!", Toast.LENGTH_SHORT).show();
-        setFragment(new RunFrag(), false);
+        setFragment(new StartFrag(), false);
     }
 
     public void setFragment(Fragment frag, boolean backstack){

@@ -1,9 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="se.mah.af6260.gotracker.StartFrag">
+    tools:context="se.mah.af6260.gotracker.StartFrag"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -72,7 +73,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.05"
             android:weightSum="1">
 
             <LinearLayout
@@ -91,7 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/tvGps"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:gravity="center" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,10 +113,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/tvStepDetecter"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
             </LinearLayout>
 
         </LinearLayout>
 
+        <Button
+            android:text="Start run"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnStartRun"
+            android:layout_weight="0.39" />
+
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

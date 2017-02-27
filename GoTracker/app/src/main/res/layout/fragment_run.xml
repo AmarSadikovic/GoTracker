@@ -57,7 +57,9 @@
         android:text="Stop run"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:textAllCaps="false"/>
+        android:id="@+id/btnStopRun"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
 </LinearLayout>
