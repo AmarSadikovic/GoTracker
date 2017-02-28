@@ -33,9 +33,35 @@ public class MainActivity extends Activity {
         dbHandler = new DBHandler();
         serviceConnection = new MyServiceConnection(this);
         serviceIntent = new Intent(this, RunService.class);
+//        bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+//        Toast.makeText(this, "Step Detector Service bound!", Toast.LENGTH_SHORT).show();
+        setFragment(new StartFrag(), false);
+    }
+
+    public void bindRunService(){
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
         Toast.makeText(this, "Step Detector Service bound!", Toast.LENGTH_SHORT).show();
-        setFragment(new StartFrag(), false);
+    }
+
+    public void unbindRunService(){
+        if (serviceBound) {
+            unbindService(serviceConnection);
+            serviceBound = false;
+            Log.v("Pedometer", "service unbound");
+            Toast.makeText(this, "Step Detector Service unbound!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (serviceBound) {
+            unbindService(serviceConnection);
+            serviceBound = false;
+            Log.v("Pedometer", "service unbound");
+            Toast.makeText(this, "Step Detector Service unbound!", Toast.LENGTH_SHORT).show();
+        }
+
+        super.onDestroy();
     }
 
     public void setFragment(Fragment frag, boolean backstack){
