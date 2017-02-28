@@ -10,6 +10,7 @@ import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Koffe on 2017-02-27.
@@ -31,15 +32,16 @@ public class RunService extends Service implements SensorEventListener{
         sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
             stepDetectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-            Log.v("Sensor", "Registered!");
+            Toast.makeText(this, "Sensor Found", Toast.LENGTH_SHORT).show();
         } else {
-            //Sensor finns inte
+            Toast.makeText(this, "Sensor not found", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         sensorManager.registerListener(this, stepDetectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        Toast.makeText(this, "Listener Register", Toast.LENGTH_SHORT).show();
         return binder;
     }
 
@@ -49,7 +51,9 @@ public class RunService extends Service implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR){
+            main.updateSteps();
+        }
     }
 
     @Override

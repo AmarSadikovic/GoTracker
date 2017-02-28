@@ -13,9 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -25,30 +23,29 @@ public class MainActivity extends Activity {
     private DBHandler dbHandler;
     private Intent serviceIntent;
     public boolean serviceBound;
+    private StartFrag sf;
+    private RunFrag rf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sf = new StartFrag();
+        rf = new RunFrag();
         dbHandler = new DBHandler();
-        serviceConnection = new MyServiceConnection(this);
-        serviceIntent = new Intent(this, RunService.class);
-//        bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-//        Toast.makeText(this, "Step Detector Service bound!", Toast.LENGTH_SHORT).show();
-        setFragment(new StartFrag(), false);
+        setFragment(sf, false);
     }
 
     public void bindRunService(){
+        serviceConnection = new MyServiceConnection(this);
+        serviceIntent = new Intent(this, RunService.class);
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-        Toast.makeText(this, "Step Detector Service bound!", Toast.LENGTH_SHORT).show();
     }
 
     public void unbindRunService(){
         if (serviceBound) {
             unbindService(serviceConnection);
             serviceBound = false;
-            Log.v("Pedometer", "service unbound");
-            Toast.makeText(this, "Step Detector Service unbound!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -57,11 +54,25 @@ public class MainActivity extends Activity {
         if (serviceBound) {
             unbindService(serviceConnection);
             serviceBound = false;
-            Log.v("Pedometer", "service unbound");
-            Toast.makeText(this, "Step Detector Service unbound!", Toast.LENGTH_SHORT).show();
+
         }
 
         super.onDestroy();
+    }
+
+    public void setRunFrag(){
+        rf = new RunFrag();
+        setFragment(rf, true);
+    }
+
+    public void setStartFrag(){
+        sf = new StartFrag();
+        setFragment(sf, false);
+    }
+
+    public void updateSteps(){
+        Toast.makeText(this, "New Step", Toast.LENGTH_SHORT).show();
+        rf.updateSteps();
     }
 
     public void setFragment(Fragment frag, boolean backstack){
@@ -76,8 +87,7 @@ public class MainActivity extends Activity {
     }
 
     public LatLng getLocation(Context context, Activity activity) {
-        int status = context.getPackageManager().checkPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                context.getPackageName());
+        int status = context.getPackageManager().checkPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION, context.getPackageName());
         if (status == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         }
@@ -89,7 +99,6 @@ public class MainActivity extends Activity {
         LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = mgr.getAllProviders();
         if (providers != null && providers.contains(LocationManager.NETWORK_PROVIDER)) {
-
             Location loc = mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (loc != null) {
                 return new LatLng(loc.getLatitude(), loc.getLongitude());
