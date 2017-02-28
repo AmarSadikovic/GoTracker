@@ -31,17 +31,27 @@ public class MainActivity extends Activity {
     private boolean isStepSensorPresent = false;
     private boolean isGpsSensorPresent = false;
 
+    public boolean isStepSensorPresent() {
+        return isStepSensorPresent;
+    }
+
+    public boolean isGpsSensorPresent() {
+        return isGpsSensorPresent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sf = new StartFrag();
+
         rf = new RunFrag();
         dbHandler = new DBHandler();
         sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
-        checkSensorStatus();
+
 
         setFragment(sf, false);
+        checkSensorStatus();
     }
 
     public void checkSensorStatus(){
@@ -52,7 +62,7 @@ public class MainActivity extends Activity {
         }
         LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
 
-        if ( manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+        if (manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
             isGpsSensorPresent = true;
         }else{
             isGpsSensorPresent = false;

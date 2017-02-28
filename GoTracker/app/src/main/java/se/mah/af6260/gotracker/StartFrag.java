@@ -53,12 +53,12 @@ public class StartFrag extends Fragment {
 
         tvGps = (TextView)view.findViewById(R.id.tvGps);
         tvStepDetecter = (TextView)view.findViewById(R.id.tvStepDetecter);
+        sensorStatus(((MainActivity)getActivity()).isGpsSensorPresent(), ((MainActivity)getActivity()).isStepSensorPresent());
         return view;
     }
     public void sensorStatus(boolean gps, boolean stepDetector){
         if(gps){
             ivGps.setImageResource(R.drawable.success);
-
         }else{
             ivGps.setImageResource(R.drawable.error);
         }
