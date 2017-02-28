@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -23,8 +25,11 @@ public class MainActivity extends Activity {
     private DBHandler dbHandler;
     private Intent serviceIntent;
     public boolean serviceBound;
+    private SensorManager sensorManager;
     private StartFrag sf;
     private RunFrag rf;
+    private boolean isStepSensorPresent = false;
+    private boolean isGpsSensorPresent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +38,26 @@ public class MainActivity extends Activity {
         sf = new StartFrag();
         rf = new RunFrag();
         dbHandler = new DBHandler();
+        sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
+        checkSensorStatus();
+
         setFragment(sf, false);
     }
 
+    public void checkSensorStatus(){
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
+            isStepSensorPresent = true;
+        }else{
+            isStepSensorPresent = false;
+        }
+        LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
 
+        if ( manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            isGpsSensorPresent = true;
+        }else{
+            isGpsSensorPresent = false;
+        }
+    }
     public void bindRunService(){
         serviceConnection = new MyServiceConnection(this);
         serviceIntent = new Intent(this, RunService.class);
@@ -61,13 +82,21 @@ public class MainActivity extends Activity {
     }
 
     public void setRunFrag(){
-        rf = new RunFrag();
-        setFragment(rf, true);
+
+        checkSensorStatus();
+        if(isGpsSensorPresent && isStepSensorPresent) {
+            rf = new RunFrag();
+            setFragment(rf, false);
+        }else{
+            Toast.makeText(this, "GPS not found", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setStartFrag(){
         sf = new StartFrag();
         setFragment(sf, false);
+        checkSensorStatus();
+        sf.sensorStatus(isGpsSensorPresent, isStepSensorPresent);
     }
 
     public void updateSteps(){
