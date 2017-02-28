@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
         setFragment(new StartFrag(), false);
     }
 
+
     public void bindRunService(){
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
         Toast.makeText(this, "Step Detector Service bound!", Toast.LENGTH_SHORT).show();
