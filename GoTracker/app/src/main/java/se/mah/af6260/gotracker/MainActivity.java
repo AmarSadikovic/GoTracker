@@ -95,10 +95,12 @@ public class MainActivity extends Activity {
 
         checkSensorStatus();
         if(isGpsSensorPresent && isStepSensorPresent) {
+            bindRunService();
             rf = new RunFrag();
             setFragment(rf, false);
         }else{
             Toast.makeText(this, "GPS not found", Toast.LENGTH_SHORT).show();
+            sf.sensorStatus(isGpsSensorPresent, isStepSensorPresent);
         }
     }
 

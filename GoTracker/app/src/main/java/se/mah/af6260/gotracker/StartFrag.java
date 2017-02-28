@@ -39,10 +39,7 @@ public class StartFrag extends Fragment {
         btnStartRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).bindRunService();
                 ((MainActivity)getActivity()).setRunFrag();
-
-
             }
         });
         btnSessions = (Button)view.findViewById(R.id.btnSessions);

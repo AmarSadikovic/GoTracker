@@ -48,8 +48,8 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).setStartFrag();
                 ((MainActivity)getActivity()).unbindRunService();
+                ((MainActivity)getActivity()).setStartFrag();
             }
         });
         tvSteps = (TextView)v.findViewById(R.id.tvSteps);
