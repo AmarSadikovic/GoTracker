@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,15 +16,24 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.w3c.dom.Text;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RunFrag extends Fragment implements OnMapReadyCallback {
     private GoogleMap map;
+    private TextView tvSteps;
+    private int stepsTaken = 0;
 
     public RunFrag() {
         // Required empty public constructor
+    }
+
+    public void updateSteps(){
+        stepsTaken++;
+        tvSteps.setText("Steps taken : " + stepsTaken);
     }
 
 
@@ -38,9 +48,11 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).setFragment(new StartFrag(), false);
+                ((MainActivity)getActivity()).setStartFrag();
+                ((MainActivity)getActivity()).unbindRunService();
             }
         });
+        tvSteps = (TextView)v.findViewById(R.id.tvSteps);
         return v;
     }
 
