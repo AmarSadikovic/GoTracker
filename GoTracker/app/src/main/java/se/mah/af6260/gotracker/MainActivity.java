@@ -54,7 +54,6 @@ public class MainActivity extends Activity {
         if (serviceBound) {
             unbindService(serviceConnection);
             serviceBound = false;
-
         }
 
         super.onDestroy();
@@ -71,7 +70,6 @@ public class MainActivity extends Activity {
     }
 
     public void updateSteps(){
-        Toast.makeText(this, "New Step", Toast.LENGTH_SHORT).show();
         rf.updateSteps();
     }
 
