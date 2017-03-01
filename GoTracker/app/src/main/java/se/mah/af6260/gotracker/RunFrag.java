@@ -3,6 +3,8 @@ package se.mah.af6260.gotracker;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,11 @@ import org.w3c.dom.Text;
 public class RunFrag extends Fragment implements OnMapReadyCallback {
     private GoogleMap map;
     private TextView tvSteps;
+    private TextView tvTimer;
     private int stepsTaken = 0;
+    private Handler handler;
+    private Runnable runnable;
+    private Stopwatch stopwatch;
 
     public RunFrag() {
         // Required empty public constructor
@@ -34,6 +40,10 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     public void updateSteps(){
         stepsTaken++;
         tvSteps.setText("Steps taken : " + stepsTaken);
+    }
+
+    public void updateTimer(String timer){
+        tvTimer.setText("Time : " + timer);
     }
 
 
@@ -48,11 +58,17 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                handler.removeCallbacks(runnable);
+                stopwatch.stopTimer();
                 ((MainActivity)getActivity()).unbindRunService();
                 ((MainActivity)getActivity()).setStartFrag();
             }
         });
         tvSteps = (TextView)v.findViewById(R.id.tvSteps);
+        tvTimer = (TextView)v.findViewById(R.id.tvTime);
+        stopwatch = new Stopwatch();
+        stopwatch.startTimer();
+        updateUI();
         return v;
     }
 
@@ -62,5 +78,17 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         LatLng latLng =  ((MainActivity)getActivity()).getLocation(getActivity(), getActivity());
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f));
         map.addMarker(new MarkerOptions().position(latLng).title("My position"));
+    }
+
+    public void updateUI() {
+        handler = new Handler();
+        handler.postDelayed(runnable = new Runnable() {
+            @Override
+            public void run() {
+                String time = stopwatch.getTime();
+                updateTimer(time);
+                updateUI();
+            }
+        }, 100);
     }
 }

@@ -24,6 +24,7 @@ public class RunService extends Service implements SensorEventListener{
     private SensorManager sensorManager;
     private Sensor stepDetectorSensor;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,6 +37,7 @@ public class RunService extends Service implements SensorEventListener{
         } else {
             Toast.makeText(this, "Sensor not found", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
