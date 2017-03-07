@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
         sf = new StartFrag();
 
         rf = new RunFrag();
-        dbHandler = new DBHandler();
+        dbHandler = new DBHandler(this, null, null, 1);
         sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
 
 
