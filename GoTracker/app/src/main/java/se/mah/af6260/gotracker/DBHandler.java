@@ -2,12 +2,15 @@ package se.mah.af6260.gotracker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Date;
+
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "goTracker.db";
     //TABLES
     public static final String TABLE_SESSION = "session";
@@ -25,13 +28,13 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_SESSIONS = "CREATE TABLE " + TABLE_SESSION + "( " +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_ACTIVITY + " TEXT, " +
-            COLUMN_START_DATE + " DATE " +
-            COLUMN_START_TIME + " TIME " +
-            COLUMN_DURATION + " INTEGER " +
+            COLUMN_START_DATE + " DATE, " +
+            COLUMN_START_TIME + " TIME, " +
+            COLUMN_DURATION + " INTEGER, " +
             COLUMN_DISTANCE + " INTEGER, " +
             COLUMN_STEPS + " INTEGER, " +
-            COLUMN_AVG_SPEED + " DOUBLE " +
-            COLUMN_STEPS_PER_SECOND + " DOUBLE " +
+            COLUMN_AVG_SPEED + " DOUBLE, " +
+            COLUMN_STEPS_PER_SECOND + " DOUBLE" +
             ");";
 
 
@@ -47,16 +50,16 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS" + TABLE_SESSION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SESSION);
         onCreate(db);
     }
 
     public void newSession(Session session) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("INSERT INTO "+TABLE_SESSION+" VALUES (" +
-                session.getActivity() +
-                "," + session.getStartDate() +
-                "," + session.getStartTime() +
+        db.execSQL("INSERT INTO "+TABLE_SESSION+" (" + COLUMN_ACTIVITY+","+COLUMN_START_DATE+","+COLUMN_START_TIME+","+COLUMN_DURATION+","+COLUMN_DISTANCE+","+COLUMN_STEPS+","+COLUMN_AVG_SPEED+","+COLUMN_STEPS_PER_SECOND+") VALUES (\"" +
+                session.getActivity() + "\"" +
+                ",\"" + session.getStartDate() + "\"" +
+                ",\"" + session.getStartTime() + "\"" +
                 "," + session.getDuration() +
                 "," + session.getDistance() +
                 "," + session.getSteps() +
@@ -64,5 +67,14 @@ public class DBHandler extends SQLiteOpenHelper {
                 "," + session.getStepsPerSecond() +
                 ")");
         db.close();
+    }
+
+    public Cursor getSessionsByDate(Date date){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_SESSION + " WHERE " + COLUMN_START_DATE + " = " + date;
+        //Cursor point to a location in your results
+        Cursor c = db.rawQuery(query, null);
+        db.close();
+        return c;
     }
 }

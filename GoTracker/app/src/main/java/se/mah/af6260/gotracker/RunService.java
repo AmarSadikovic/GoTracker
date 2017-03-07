@@ -28,7 +28,7 @@ public class RunService extends Service implements SensorEventListener{
     @Override
     public void onCreate() {
         super.onCreate();
-        dbHandler = new DBHandler();
+        dbHandler = new DBHandler(this, null, null, 1);
         binder = new LocalBinder();
         sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
