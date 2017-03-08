@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         rf = new RunFrag();
         mapFrag = new MapFrag();
         sessionsFrag = new SessionsFrag();
-        dbHandler = new DBHandler();
+        dbHandler = new DBHandler(this, null, null, 1);
         sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
         setFragment(sf, false);
         checkSensorStatus();
