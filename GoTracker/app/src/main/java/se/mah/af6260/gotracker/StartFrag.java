@@ -16,7 +16,7 @@ import android.widget.TextView;
  */
 public class StartFrag extends Fragment {
 
-    private Button btnStart, btnSessions, btnMap, btnStartRun;
+    private Button btnStartRun;
     private Button btnRun, btnWalk, btnBicycle;
     private TextView tvGps, tvStepDetecter;
     private ImageView ivGps, ivStepdetector;
@@ -31,7 +31,6 @@ public class StartFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
-        btnStart = (Button)view.findViewById(R.id.btnStart);
         btnStartRun = (Button)view.findViewById(R.id.btnStartRun);
         ivGps = (ImageView)view.findViewById(R.id.ivGps);
         ivStepdetector = (ImageView)view.findViewById(R.id.ivStepdetector);
@@ -42,8 +41,6 @@ public class StartFrag extends Fragment {
                 ((MainActivity)getActivity()).setRunFrag();
             }
         });
-        btnSessions = (Button)view.findViewById(R.id.btnSessions);
-        btnMap = (Button)view.findViewById(R.id.btnMap);
         btnRun = (Button)view.findViewById(R.id.btnRun);
         btnWalk = (Button)view.findViewById(R.id.btnWalk);
         btnBicycle = (Button)view.findViewById(R.id.btnBicycle);

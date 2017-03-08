@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,55 +18,34 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.39">
-
-            <Button
-                android:text="Start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnStart"
-                android:layout_weight="1" />
-
-            <Button
-                android:text="Past sessions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnSessions"
-                android:layout_weight="1" />
-
-            <Button
-                android:text="Map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnMap"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.17">
+            android:layout_weight="0.17"
+            android:layout_marginTop="200px">
 
             <Button
                 android:text="Run"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnRun"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:backgroundTint="?attr/actionModeSplitBackground"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:text="Walk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnWalk" />
+                android:id="@+id/btnWalk"
+                android:backgroundTint="?attr/actionModeSplitBackground"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:text="Bicycle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnBicycle"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:backgroundTint="?attr/actionModeSplitBackground"
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
         <LinearLayout
@@ -76,10 +55,17 @@
             android:layout_weight="0.05"
             android:weightSum="1">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?attr/actionModeSplitBackground"
+                android:layout_margin="10px"/>
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
 
                 <ImageView
                     android:layout_height="45dp"
@@ -93,8 +79,15 @@
                     android:layout_height="match_parent"
                     android:id="@+id/tvGps"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?attr/actionModeSplitBackground"
+                android:layout_margin="10px"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -114,18 +107,28 @@
                     android:layout_height="match_parent"
                     android:id="@+id/tvStepDetecter"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?attr/actionModeSplitBackground"
+                android:layout_margin="10px"/>
 
         </LinearLayout>
 
-        <Button
-            android:text="Start run"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnStartRun"
-            android:layout_weight="0.39" />
-
     </LinearLayout>
-</LinearLayout>
+
+    <Button
+        android:text="Start run"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnStartRun"
+        android:backgroundTint="?attr/actionModeSplitBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0.17"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

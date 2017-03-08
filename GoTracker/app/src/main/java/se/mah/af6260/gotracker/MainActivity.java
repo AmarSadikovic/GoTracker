@@ -1,5 +1,6 @@
 package se.mah.af6260.gotracker;
 
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,14 +30,18 @@ public class MainActivity extends Activity {
     private SensorManager sensorManager;
     private StartFrag sf;
     private RunFrag rf;
+    private MapFrag mapFrag;
+    private SessionsFrag sessionsFrag;
     private boolean isStepSensorPresent = false;
     private boolean isGpsSensorPresent = false;
 
     public boolean isStepSensorPresent() {
+
         return isStepSensorPresent;
     }
 
     public boolean isGpsSensorPresent() {
+
         return isGpsSensorPresent;
     }
 
@@ -44,14 +50,39 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sf = new StartFrag();
-
         rf = new RunFrag();
-        dbHandler = new DBHandler(this, null, null, 1);
+        mapFrag = new MapFrag();
+        sessionsFrag = new SessionsFrag();
+        dbHandler = new DBHandler();
         sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
-
-
         setFragment(sf, false);
         checkSensorStatus();
+        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                if(pos == 0){
+                    setStartFrag();
+
+                } else if (pos == 1){
+                    setFragment(sessionsFrag, false);
+
+                } else if (pos == 2){
+                    setFragment(mapFrag, false);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     public void checkSensorStatus(){
