@@ -24,7 +24,7 @@
         android:textSize="20sp" />
 
     <TextView
-    android:text="Distance : 0km"
+    android:text="Distance : 0,00m"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/tvDistance"

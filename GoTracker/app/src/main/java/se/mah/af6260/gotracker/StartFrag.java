@@ -20,7 +20,20 @@ public class StartFrag extends Fragment {
     private ImageView ivRun, ivWalk, ivBicycle;
     private TextView tvGps, tvStepDetecter;
     private ImageView ivGps, ivStepdetector;
-    private boolean isRunning, isWalking, isCycling;
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public boolean isWalking() {
+        return isWalking;
+    }
+
+    public boolean isCycling() {
+        return isCycling;
+    }
+
+    private boolean isRunning = true, isWalking = false, isCycling = false;
 
 
     public StartFrag() {

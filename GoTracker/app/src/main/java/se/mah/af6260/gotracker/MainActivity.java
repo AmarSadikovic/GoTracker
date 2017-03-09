@@ -125,14 +125,29 @@ public class MainActivity extends Activity {
     public void setRunFrag(){
 
         checkSensorStatus();
-        if(isGpsSensorPresent && isStepSensorPresent) {
+        if(isGpsSensorPresent && isStepSensorPresent && !sf.isCycling()) {
             bindRunService();
+            rf = new RunFrag();
+            setFragment(rf, false);
+        }else if(isGpsSensorPresent && isStepSensorPresent && sf.isCycling()){
             rf = new RunFrag();
             setFragment(rf, false);
         }else{
             Toast.makeText(this, "GPS not found", Toast.LENGTH_SHORT).show();
             sf.sensorStatus(isGpsSensorPresent, isStepSensorPresent);
         }
+    }
+
+    public String getActivityType(){
+        String ret = "";
+        if(sf.isRunning()){
+            ret = "running";
+        } else if(sf.isWalking()){
+            ret = "walking";
+        } else if(sf.isCycling()){
+            ret = "cycling";
+        }
+        return ret;
     }
 
     public void setStartFrag(){
