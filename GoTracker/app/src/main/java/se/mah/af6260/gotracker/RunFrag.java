@@ -19,6 +19,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -41,6 +42,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     private LatLng startPosition;
     private ArrayList<LatLng> route = new ArrayList<LatLng>();
     private float distanceInMeters = 0;
+    private Marker mark;
 
     public RunFrag() {
         // Required empty public constructor
@@ -109,8 +111,10 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         startPosition =  ((MainActivity)getActivity()).getLocation(getActivity(), getActivity());
         route.add(startPosition);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(startPosition, 15.0f));
-        map.addMarker(new MarkerOptions().position(startPosition).title("My position").icon(BitmapDescriptorFactory.fromResource(R.drawable.mapicon)));
- //       LatLng homePos = new LatLng(55.6910332, 13.1791068);
+        mark = map.addMarker(new MarkerOptions().position(startPosition).title("My position").icon(BitmapDescriptorFactory.fromResource(R.drawable.mapicon)));
+
+      //  LatLng homePos = new LatLng(55.6910332, 13.1791068);
+
 
     }
     private int updateTimer = 0;
@@ -126,6 +130,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                     LatLng lastPos = route.get(route.size()-1);
                     LatLng newPos = ((MainActivity)getActivity()).getLocation(getActivity(), getActivity());
                     route.add(newPos);
+                    mark.setPosition(newPos);
                     map.addPolyline(new PolylineOptions()
                             .add(lastPos, newPos)
                             .width(15)
