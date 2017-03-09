@@ -17,9 +17,10 @@ import android.widget.TextView;
 public class StartFrag extends Fragment {
 
     private Button btnStartRun;
-    private Button btnRun, btnWalk, btnBicycle;
+    private ImageView ivRun, ivWalk, ivBicycle;
     private TextView tvGps, tvStepDetecter;
     private ImageView ivGps, ivStepdetector;
+    private boolean isRunning, isWalking, isCycling;
 
 
     public StartFrag() {
@@ -41,10 +42,40 @@ public class StartFrag extends Fragment {
                 ((MainActivity)getActivity()).setRunFrag();
             }
         });
-        btnRun = (Button)view.findViewById(R.id.btnRun);
-        btnWalk = (Button)view.findViewById(R.id.btnWalk);
-        btnBicycle = (Button)view.findViewById(R.id.btnBicycle);
+        ivRun = (ImageView) view.findViewById(R.id.ivRun);
+        ivWalk = (ImageView)view.findViewById(R.id.ivWalk);
+        ivBicycle = (ImageView)view.findViewById(R.id.ivBicycle);
 
+        ivRun.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                ivRun.setImageResource(R.drawable.selectedrunning);
+                ivWalk.setImageResource(R.drawable.walking);
+                ivBicycle.setImageResource(R.drawable.bicycle);
+                isRunning = true;
+                isWalking = false;
+                isCycling = false;
+            }
+        });
+        ivWalk.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                ivWalk.setImageResource(R.drawable.selectedwalking);
+                ivRun.setImageResource(R.drawable.running);
+                ivBicycle.setImageResource(R.drawable.bicycle);
+                isRunning = false;
+                isWalking = true;
+                isCycling = false;
+            }
+        });
+        ivBicycle.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                ivBicycle.setImageResource(R.drawable.selectedbicycle);
+                ivRun.setImageResource(R.drawable.running);
+                ivWalk.setImageResource(R.drawable.walking);
+                isRunning = false;
+                isWalking = false;
+                isCycling = true;
+            }
+        });
         tvGps = (TextView)view.findViewById(R.id.tvGps);
         tvStepDetecter = (TextView)view.findViewById(R.id.tvStepDetecter);
         sensorStatus(((MainActivity)getActivity()).isGpsSensorPresent(), ((MainActivity)getActivity()).isStepSensorPresent());

@@ -21,31 +21,29 @@
             android:layout_weight="0.17"
             android:layout_marginTop="200px">
 
-            <Button
-                android:text="Run"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnRun"
-                android:layout_weight="1"
-                android:backgroundTint="?attr/actionModeSplitBackground"
-                android:textColor="@android:color/white" />
 
-            <Button
-                android:text="Walk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnWalk"
-                android:backgroundTint="?attr/actionModeSplitBackground"
-                android:textColor="@android:color/white" />
 
-            <Button
-                android:text="Bicycle"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnBicycle"
-                android:layout_weight="1"
-                android:backgroundTint="?attr/actionModeSplitBackground"
-                android:textColor="@android:color/white" />
+                android:src="@drawable/running"
+                android:id="@+id/ivRun"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/walking"
+                android:id="@+id/ivWalk"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bicycle"
+                android:id="@+id/ivBicycle"
+                android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
