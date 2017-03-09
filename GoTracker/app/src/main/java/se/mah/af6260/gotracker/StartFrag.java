@@ -63,7 +63,7 @@ public class StartFrag extends Fragment {
             public void onClick(View view) {
                 ivRun.setImageResource(R.drawable.selectedrunning);
                 ivWalk.setImageResource(R.drawable.walking);
-                ivBicycle.setImageResource(R.drawable.bicycle);
+                ivBicycle.setImageResource(R.drawable.bicycling);
                 isRunning = true;
                 isWalking = false;
                 isCycling = false;
@@ -73,7 +73,7 @@ public class StartFrag extends Fragment {
             public void onClick(View view) {
                 ivWalk.setImageResource(R.drawable.selectedwalking);
                 ivRun.setImageResource(R.drawable.running);
-                ivBicycle.setImageResource(R.drawable.bicycle);
+                ivBicycle.setImageResource(R.drawable.bicycling);
                 isRunning = false;
                 isWalking = true;
                 isCycling = false;

@@ -71,10 +71,11 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Cursor getSessionsByDate(Date date){
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_SESSION + " WHERE " + COLUMN_START_DATE + " = " + date;
+        String query = "SELECT * FROM " + TABLE_SESSION + " WHERE " + COLUMN_START_DATE + " = " + "'"+date+"'";
         //Cursor point to a location in your results
-        Cursor c = db.rawQuery(query, null);
-        db.close();
-        return c;
+        return db.rawQuery(query, null);
+//        Cursor c = db.rawQuery(query, null);
+//        db.close();
+//        return c;
     }
 }
