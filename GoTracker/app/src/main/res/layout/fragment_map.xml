@@ -3,17 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="se.mah.af6260.gotracker.MapFrag"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:orientation="vertical">
 
     <fragment
         android:name="com.google.android.gms.maps.MapFragment"
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         tools:ignore="RtlHardcoded"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
+        android:layout_weight="1.13"
+        android:layout_height="490dp" />
+
+    <Button
+        android:text="New session"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNewSession"
         android:layout_weight="1.13" />
 
 </LinearLayout>

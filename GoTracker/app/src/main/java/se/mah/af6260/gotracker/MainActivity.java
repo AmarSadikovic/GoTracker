@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
     private SessionsFrag sessionsFrag;
     private boolean isStepSensorPresent = false;
     private boolean isGpsSensorPresent = false;
+    private TabLayout tabLayout;
 
     public boolean isStepSensorPresent() {
 
@@ -55,21 +56,21 @@ public class MainActivity extends Activity {
         sessionsFrag = new SessionsFrag();
         dbHandler = new DBHandler(this, null, null, 1);
         sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
-        setFragment(sf, false);
+        setFragment(mapFrag, false);
         checkSensorStatus();
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
                 if(pos == 0){
-                    setStartFrag();
-
+                    setFragment(mapFrag, false);
                 } else if (pos == 1){
                     setFragment(sessionsFrag, false);
 
                 } else if (pos == 2){
-                    setFragment(mapFrag, false);
+                    setStartFrag();
                 }
             }
 
@@ -85,6 +86,10 @@ public class MainActivity extends Activity {
         });
     }
 
+    public void changeTab(){
+        tabLayout.getTabAt(2).select();
+        setStartFrag();
+    }
     public void checkSensorStatus(){
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
             isStepSensorPresent = true;
