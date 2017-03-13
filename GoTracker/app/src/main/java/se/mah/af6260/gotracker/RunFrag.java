@@ -34,7 +34,6 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     private TextView tvSteps;
     private TextView tvTimer;
     private TextView tvDistance;
-    private TextView tvSpeed;
     private int stepsTaken = 0;
     private Handler handler;
     private Runnable runnable;
@@ -51,8 +50,10 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     }
 
     public void updateSteps() {
-        stepsTaken++;
-        tvSteps.setText("Steps taken : " + stepsTaken);
+        if(isStarted) {
+            stepsTaken++;
+            tvSteps.setText("Steps taken : " + stepsTaken);
+        }
     }
 
     public void updateTimer(String timer) {
@@ -64,14 +65,20 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         tvDistance.setText("Distance : " + String.format("%.2f", distance) + "m");
     }
 
-    public void updateSpeed(float distance){
-        long hours = stopwatch.getHour();
-        distance = distance/1000;
-        float kmh = distance/hours;
-        if(Float.isNaN(kmh)) {
-            tvSpeed.setText("Average speed : " + 0 + "km/h");
-        } else {
-            tvSpeed.setText("Average speed: " + String.format("%.2f", kmh) + " km/h");
+    public void updateMap(LatLng position){
+        LatLng newPos = position;
+        mark.setPosition(newPos);
+        if(isStarted) {
+            LatLng lastPos = route.get(route.size()-1);
+            route.add(newPos);
+            map.addPolyline(new PolylineOptions()
+                    .add(lastPos, newPos)
+                    .width(15)
+                    .color(Color.BLUE));
+            float[] results = new float[1];
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(newPos, 15.0f));
+            distanceInMeters += results[0];
+            updateDistance(distanceInMeters);
         }
     }
 
@@ -89,7 +96,6 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         }
         tvTimer = (TextView) v.findViewById(R.id.tvTime);
         tvDistance = (TextView) v.findViewById(R.id.tvDistance);
-        tvSpeed = (TextView)v.findViewById(R.id.tvSpeed);
         TextView activity = (TextView)v.findViewById(R.id.tvActivity);
         activity.setText("Activity: " + ((MainActivity) getActivity()).getActivityType());
 
@@ -101,6 +107,8 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                     stopwatch = new Stopwatch();
                     stopwatch.startTimer();
                     updateUI();
+                    startPosition =  ((MainActivity)getActivity()).getLocation();
+                    route.add(startPosition);
                     btnStartStop.setText("STOP RUN");
                     isStarted = true;
                 }else if(isStarted){
@@ -120,8 +128,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
-        startPosition =  ((MainActivity)getActivity()).getLocation(getActivity(), getActivity());
-        route.add(startPosition);
+        startPosition =  ((MainActivity)getActivity()).getLocationMapFrag(getActivity(), getActivity());
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(startPosition, 15.0f));
         mark = map.addMarker(new MarkerOptions().position(startPosition).title("My position").icon(BitmapDescriptorFactory.fromResource(R.drawable.mapicon)));
 
@@ -129,33 +136,13 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
 
 
     }
-    private int updateTimer = 0;
+
     public void updateUI() {
         handler = new Handler();
         handler.postDelayed(runnable = new Runnable() {
             @Override
             public void run() {
                 String time = stopwatch.getTime();
-
-                if(updateTimer == 20){
-                    updateTimer = 0;
-                    LatLng lastPos = route.get(route.size()-1);
-                    LatLng newPos = ((MainActivity)getActivity()).getLocation(getActivity(), getActivity());
-                    route.add(newPos);
-                    mark.setPosition(newPos);
-                    map.addPolyline(new PolylineOptions()
-                            .add(lastPos, newPos)
-                            .width(15)
-                            .color(Color.BLUE));
-                    float[] results = new float[1];
-                    Location.distanceBetween(lastPos.latitude, lastPos.longitude, newPos.latitude,newPos.longitude, results);
-                    distanceInMeters += results[0];
-                    updateDistance(distanceInMeters);
-
-                    updateSpeed(distanceInMeters);
-                } else {
-                    updateTimer++;
-                }
                 updateTimer(time);
                 updateUI();
             }

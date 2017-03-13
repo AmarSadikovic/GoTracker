@@ -1,6 +1,7 @@
 package se.mah.af6260.gotracker;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -36,6 +38,7 @@ public class MainActivity extends Activity {
     private boolean isGpsSensorPresent = false;
     private TabLayout tabLayout;
 
+
     public boolean isStepSensorPresent() {
 
         return isStepSensorPresent;
@@ -58,8 +61,8 @@ public class MainActivity extends Activity {
         sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
         setFragment(mapFrag, false);
         checkSensorStatus();
-        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
 
+        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -130,11 +133,8 @@ public class MainActivity extends Activity {
     public void setRunFrag(){
 
         checkSensorStatus();
-        if(isGpsSensorPresent && isStepSensorPresent && !sf.isCycling()) {
+        if(isGpsSensorPresent && isStepSensorPresent) {
             bindRunService();
-            rf = new RunFrag();
-            setFragment(rf, false);
-        }else if(isGpsSensorPresent && isStepSensorPresent && sf.isCycling()){
             rf = new RunFrag();
             setFragment(rf, false);
         }else{
@@ -145,11 +145,11 @@ public class MainActivity extends Activity {
 
     public String getActivityType(){
         String ret = "";
-        if(sf.isRunning()){
+        if(isRunning){
             ret = "running";
-        } else if(sf.isWalking()){
+        } else if(isWalking){
             ret = "walking";
-        } else if(sf.isCycling()){
+        } else if(isCycling){
             ret = "cycling";
         }
         return ret;
@@ -160,6 +160,40 @@ public class MainActivity extends Activity {
         setFragment(sf, false);
         checkSensorStatus();
         sf.sensorStatus(isGpsSensorPresent, isStepSensorPresent);
+    }
+
+
+    public void updateMap(LatLng pos){
+        if(pos != null) {
+            rf.updateMap(pos);
+        } else {
+            Toast.makeText(this, "GPS not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public LatLng getLocation(){
+        return runService.getLocation(this, this);
+    }
+
+    public LatLng getLocationMapFrag(Context context, Activity activity){
+        int status = context.getPackageManager().checkPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION, context.getPackageName());
+        if (status == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+        while (status == PackageManager.PERMISSION_DENIED) {
+            if (context.getPackageManager().checkPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION, context.getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+                status = PackageManager.PERMISSION_GRANTED;
+            }
+        }
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = locationManager.getAllProviders();
+        if (providers != null && providers.contains(LocationManager.NETWORK_PROVIDER)) {
+            Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (loc != null) {
+                return new LatLng(loc.getLatitude(), loc.getLongitude());
+            }
+        }
+        return null;
     }
 
     public void updateSteps(){
@@ -177,24 +211,17 @@ public class MainActivity extends Activity {
         fm.executePendingTransactions();
     }
 
-    public LatLng getLocation(Context context, Activity activity) {
-        int status = context.getPackageManager().checkPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION, context.getPackageName());
-        if (status == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-        }
-        while (status == PackageManager.PERMISSION_DENIED) {
-            if (context.getPackageManager().checkPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION, context.getPackageName()) == PackageManager.PERMISSION_GRANTED) {
-                status = PackageManager.PERMISSION_GRANTED;
-            }
-        }
-        LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        List<String> providers = mgr.getAllProviders();
-        if (providers != null && providers.contains(LocationManager.NETWORK_PROVIDER)) {
-            Location loc = mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (loc != null) {
-                return new LatLng(loc.getLatitude(), loc.getLongitude());
-            }
-        }
-        return new LatLng(55.6910332, 13.1791068); //Home position
+
+    public boolean isCycling() {
+        return isCycling;
     }
+
+    public void setRunning(boolean running) {isRunning = running;}
+
+    public void setWalking(boolean walking) {isWalking = walking;}
+
+    public void setCycling(boolean cycling) {isCycling = cycling;}
+
+    private boolean isRunning = true, isWalking = false, isCycling = false;
+
 }
