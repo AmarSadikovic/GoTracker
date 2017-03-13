@@ -32,7 +32,7 @@
     android:textSize="20sp" />
 
     <TextView
-        android:text="Time : 00:00"
+        android:text="Time : 00:00:00.0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvTime"
@@ -54,7 +54,7 @@
         android:textSize="20sp" />
 
     <Button
-        android:text="Stop run"
+        android:text="START RUN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnStopRun"

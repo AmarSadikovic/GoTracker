@@ -43,6 +43,8 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     private ArrayList<LatLng> route = new ArrayList<LatLng>();
     private float distanceInMeters = 0;
     private Marker mark;
+    private Button btnStartStop;
+    private Boolean isStarted = false;
 
     public RunFrag() {
         // Required empty public constructor
@@ -80,16 +82,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         View v = inflater.inflate(R.layout.fragment_run, container, false);
         MapFragment mapFragment = (MapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Button btn = (Button) v.findViewById(R.id.btnStopRun);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handler.removeCallbacks(runnable);
-                stopwatch.stopTimer();
-                ((MainActivity) getActivity()).unbindRunService();
-                ((MainActivity) getActivity()).setStartFrag();
-            }
-        });
+
         tvSteps = (TextView) v.findViewById(R.id.tvSteps);
         if(((MainActivity) getActivity()).getActivityType().equals("cycling")){
             tvSteps.setText("No Stepdetector for cycling");
@@ -99,9 +92,28 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         tvSpeed = (TextView)v.findViewById(R.id.tvSpeed);
         TextView activity = (TextView)v.findViewById(R.id.tvActivity);
         activity.setText("Activity: " + ((MainActivity) getActivity()).getActivityType());
-        stopwatch = new Stopwatch();
-        stopwatch.startTimer();
-        updateUI();
+
+        btnStartStop = (Button) v.findViewById(R.id.btnStopRun);
+        btnStartStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isStarted){
+                    stopwatch = new Stopwatch();
+                    stopwatch.startTimer();
+                    updateUI();
+                    btnStartStop.setText("STOP RUN");
+                    isStarted = true;
+                }else if(isStarted){
+                    handler.removeCallbacks(runnable);
+                    stopwatch.stopTimer();
+                    ((MainActivity) getActivity()).unbindRunService();
+                    ((MainActivity) getActivity()).setStartFrag();
+                    btnStartStop.setText("START RUN");
+                    isStarted = false;
+                }
+            }
+        });
+
         return v;
     }
 
