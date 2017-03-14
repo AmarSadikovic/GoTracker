@@ -23,7 +23,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -53,6 +55,9 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         if(isStarted) {
             stepsTaken++;
             tvSteps.setText("Steps taken : " + stepsTaken);
+            Calendar cal = Calendar.getInstance();
+
+
         }
     }
 
