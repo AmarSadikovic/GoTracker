@@ -7,7 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.text.SimpleDateFormat;
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -46,6 +46,9 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     private Marker mark;
     private Button btnStartStop;
     private Boolean isStarted = false;
+    private String startTime;
+    private String duration, distanceString;
+    private double avgSpeed = 1337;
 
     public RunFrag() {
         // Required empty public constructor
@@ -62,12 +65,13 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     }
 
     public void updateTimer(String timer) {
+        duration = timer;
         tvTimer.setText("Time : " + timer);
     }
 
     public void updateDistance(float distance){
-
-        tvDistance.setText("Distance : " + String.format("%.2f", distance) + "m");
+        distanceString = String.format("%.2f", distance);
+        tvDistance.setText("Distance : " + distanceString + "m");
     }
 
     public void updateMap(LatLng position){
@@ -111,6 +115,9 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                 if(!isStarted){
                     stopwatch = new Stopwatch();
                     stopwatch.startTimer();
+                    Calendar cal = Calendar.getInstance();
+                    startTime = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
+//                    startTimeMillis = System.currentTimeMillis();
                     updateUI();
                     startPosition =  ((MainActivity)getActivity()).getLocation();
                     route.add(startPosition);
@@ -119,13 +126,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                 }else if(isStarted){
                     handler.removeCallbacks(runnable);
                     stopwatch.stopTimer();
-                    //Insättning i databas
-                    DBHandler dbHandler = ((MainActivity)getActivity()).getDBReference();
-//                    dbHandler.newSession(new Session(((MainActivity) getActivity()).getActivityType()), ));
-                    ///Insättning i databas
-
-
-
+                    saveResultToDatabase();
                     ((MainActivity) getActivity()).unbindRunService();
                     ((MainActivity) getActivity()).setStartFrag();
                     btnStartStop.setText("START RUN");
@@ -135,6 +136,13 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
         });
 
         return v;
+    }
+
+    private void saveResultToDatabase() {
+        DBHandler dbHandler = ((MainActivity)getActivity()).getDBReference();
+        LocalDate to = new LocalDate(System.currentTimeMillis());
+        dbHandler.newSession(new Session(((MainActivity) getActivity()).getActivityType(),
+                to.getYear(), to.getMonthOfYear(), to.getDayOfMonth(), startTime, duration, distanceString, stepsTaken, avgSpeed, route));
     }
 
     @Override
