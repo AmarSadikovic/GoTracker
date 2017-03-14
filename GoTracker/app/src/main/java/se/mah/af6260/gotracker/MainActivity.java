@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
     private boolean isStepSensorPresent = false;
     private boolean isGpsSensorPresent = false;
     private TabLayout tabLayout;
+    private Session selectedSession;
 
 
     public boolean isStepSensorPresent() {
@@ -87,6 +88,13 @@ public class MainActivity extends Activity {
 
             }
         });
+    }
+    public void setSelectedSession(Session session){
+        this.selectedSession = session;
+    }
+
+    public Session getSelectedSession(){
+        return selectedSession;
     }
 
     public void changeTab(){

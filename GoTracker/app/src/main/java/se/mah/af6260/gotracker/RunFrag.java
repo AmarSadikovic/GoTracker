@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +117,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                     stopwatch = new Stopwatch();
                     stopwatch.startTimer();
                     Calendar cal = Calendar.getInstance();
-                    startTime = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
+                    startTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
 //                    startTimeMillis = System.currentTimeMillis();
                     updateUI();
                     startPosition =  ((MainActivity)getActivity()).getLocation();
@@ -141,6 +142,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     private void saveResultToDatabase() {
         DBHandler dbHandler = ((MainActivity)getActivity()).getDBReference();
         LocalDate to = new LocalDate(System.currentTimeMillis());
+        Log.v("TO DATABASE ", to.getYear() + " MONTH " + to.getMonthOfYear() + " DAY " + to.getDayOfMonth());
         dbHandler.newSession(new Session(((MainActivity) getActivity()).getActivityType(),
                 to.getYear(), to.getMonthOfYear(), to.getDayOfMonth(), startTime, duration, distanceString, stepsTaken, avgSpeed, route));
     }

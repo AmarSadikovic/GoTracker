@@ -88,11 +88,16 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_SESSION, null, values);
         db.close();
         SQLiteDatabase dbRead = getReadableDatabase();
-        Cursor cursor = dbRead.rawQuery("SELECT MAX(" + COLUMN_ID + ") FROM " + TABLE_SESSION, null);
-        cursor.moveToFirst();
-        int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+        Cursor cursor = dbRead.rawQuery("SELECT * FROM " + TABLE_SESSION , null);
+        int maxID = 0;
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            if(maxID < id){
+                maxID = id;
+            }
+        }
         dbRead.close();
-        newRoute(id, session);
+        newRoute(maxID, session);
     }
 
     private void newRoute(int id, Session session){

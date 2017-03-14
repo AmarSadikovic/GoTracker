@@ -31,13 +31,20 @@ public class SessionAdapter extends ArrayAdapter<Session> {
             holder = new ViewHolder();
             holder.ivActivity = (ImageView)convertView.findViewById(R.id.ivActivity);
             holder.tvStarTime = (TextView)convertView.findViewById(R.id.tvStartTime);
-            holder.tvDistance = (TextView)convertView.findViewById(R.id.tvDistance);
+            holder.tvDuration = (TextView)convertView.findViewById(R.id.tvDuration);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder)convertView.getTag();
         }
-
-        holder.tvStarTime.setText("");
+        if(getItem(position).getActivityType().equals("running")){
+            holder.ivActivity.setImageResource(R.drawable.running);
+        } else  if(getItem(position).getActivityType().equals("cycling")){
+            holder.ivActivity.setImageResource(R.drawable.bicycling);
+        } else  if(getItem(position).getActivityType().equals("walking")){
+            holder.ivActivity.setImageResource(R.drawable.walking);
+        }
+        holder.tvStarTime.setText(getItem(position).getStartTime());
+        holder.tvDuration.setText(getItem(position).getDuration());
 
         return convertView;
     }
@@ -45,6 +52,6 @@ public class SessionAdapter extends ArrayAdapter<Session> {
     private class ViewHolder{
         ImageView ivActivity;
         TextView tvStarTime;
-        TextView tvDistance;
+        TextView tvDuration;
     }
 }
