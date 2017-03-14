@@ -84,7 +84,7 @@ public class RunService extends Service implements SensorEventListener, Location
                 status = PackageManager.PERMISSION_GRANTED;
             }
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 5, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 4000, 30, this);
         List<String> providers = locationManager.getAllProviders();
         if (providers != null && providers.contains(LocationManager.NETWORK_PROVIDER)) {
             Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);

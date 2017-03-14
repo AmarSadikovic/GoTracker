@@ -76,7 +76,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                     .width(15)
                     .color(Color.BLUE));
             float[] results = new float[1];
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(newPos, 15.0f));
+            Location.distanceBetween(lastPos.latitude, lastPos.longitude, newPos.latitude, newPos.longitude, results);
             distanceInMeters += results[0];
             updateDistance(distanceInMeters);
         }
