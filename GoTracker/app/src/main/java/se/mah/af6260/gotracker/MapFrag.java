@@ -48,8 +48,10 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
-        LatLng latLng =  ((MainActivity)getActivity()).getLocation(getActivity(), getActivity());
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f));
-        map.addMarker(new MarkerOptions().position(latLng).title("My position"));
+        LatLng latLng =  ((MainActivity)getActivity()).getLocationMapFrag(getActivity(), getActivity());
+        if(latLng != null) {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f));
+            map.addMarker(new MarkerOptions().position(latLng).title("My position"));
+        }
     }
 }
