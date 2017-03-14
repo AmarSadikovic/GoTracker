@@ -1,7 +1,10 @@
 package se.mah.af6260.gotracker;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 
 /**
  * Created by Koffe on 2017-03-01.
@@ -9,84 +12,82 @@ import java.sql.Time;
 
 public class Session {
 
-    private String activity;
-    private int duration, distance, steps;
-    private double avgSpeed, stepsPerSecond;
-    private Date startDate;
-    private Time startTime;
+    private String activityType;
+    private int steps;
+    private double avgSpeed;
+    private int startYear, startMonth, startDay;
+    private String startTime, duration, distance;
+    private ArrayList<LatLng> routeArray;
+    private int id;
 
-    public Session(String activity, Date startDate, Time startTime, int duration, int distance, int steps, double avgSpeed, double stepsPerSecond){
-        this.activity = activity;
-        this.startDate = startDate;
+    public Session(String activityType, int startYear, int startMonth, int startDay, String startTime, String duration, String distance, int steps, double avgSpeed, ArrayList<LatLng> routeArray) {
+        this.activityType = activityType;
+        this.startYear = startYear;
+        this.startMonth = startMonth;
+        this.startDay = startDay;
         this.startTime = startTime;
         this.duration = duration;
         this.distance = distance;
         this.steps = steps;
         this.avgSpeed = avgSpeed;
-        this.stepsPerSecond = stepsPerSecond;
+        this.routeArray = routeArray;
     }
 
-    public String getActivity() {
-        return activity;
+    public Session(int id, String activityType, int startYear, int startMonth, int startDay, String startTime, String duration, String distance, int steps, double avgSpeed, ArrayList<LatLng> routeArray) {
+        this.id = id;
+        this.activityType = activityType;
+        this.startYear = startYear;
+        this.startMonth = startMonth;
+        this.startDay = startDay;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.distance = distance;
+        this.steps = steps;
+        this.avgSpeed = avgSpeed;
+        this.routeArray = routeArray;
     }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public int getId(){
+        return id;
     }
 
-    public int getDuration() {
+    public String getActivityType() {
+        return activityType;
+    }
+
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public int getDistance() {
+    public String getDistance() {
         return distance;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
     }
 
     public int getSteps() {
         return steps;
     }
 
-    public void setSteps(int steps) {
-        this.steps = steps;
-    }
-
     public double getAvgSpeed() {
         return avgSpeed;
     }
 
-    public void setAvgSpeed(double avgSpeed) {
-        this.avgSpeed = avgSpeed;
+    public int getStartYear() {
+        return startYear;
     }
 
-    public double getStepsPerSecond() {
-        return stepsPerSecond;
+    public int getStartMonth() {
+        return startMonth;
     }
 
-    public void setStepsPerSecond(double stepsPerSecond) {
-        this.stepsPerSecond = stepsPerSecond;
+    public int getStartDay() {
+        return startDay;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
+    public ArrayList<LatLng> getRouteArray() {
+        return routeArray;
     }
 }
