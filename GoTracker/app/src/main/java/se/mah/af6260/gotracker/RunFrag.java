@@ -119,6 +119,13 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                 }else if(isStarted){
                     handler.removeCallbacks(runnable);
                     stopwatch.stopTimer();
+                    //Insättning i databas
+                    DBHandler dbHandler = ((MainActivity)getActivity()).getDBReference();
+//                    dbHandler.newSession(new Session(((MainActivity) getActivity()).getActivityType()), ));
+                    ///Insättning i databas
+
+
+
                     ((MainActivity) getActivity()).unbindRunService();
                     ((MainActivity) getActivity()).setStartFrag();
                     btnStartStop.setText("START RUN");

@@ -93,6 +93,11 @@ public class MainActivity extends Activity {
         tabLayout.getTabAt(2).select();
         setStartFrag();
     }
+
+    public DBHandler getDBReference(){
+        return dbHandler;
+    }
+
     public void checkSensorStatus(){
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
             isStepSensorPresent = true;
