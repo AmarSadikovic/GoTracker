@@ -10,10 +10,10 @@ import java.sql.Date;
 
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "goTracker.db";
     //TABLES
-    public static final String TABLE_SESSION = "session";
+    public static final String TABLE_SESSION = "session", TABLE_ROUTES = "route";
     //COLUMNS
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ACTIVITY = "_activity";
@@ -24,7 +24,11 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_STEPS = "_steps";
     public static final String COLUMN_AVG_SPEED = "_averageSpeed";
     public static final String COLUMN_STEPS_PER_SECOND = "_stepsPerSecond";
-    //CREATE STATEMENT
+    public static final String COLUMN_LATITUDE = "latitude";
+    public static final String COLUMN_LONGITUDE = "longitude";
+    public static final String COLUMN_SESSIONID = "sessionid";
+    public static final String COLUMN_COUNT = "count";
+    //CREATE STATEMENTS
     private static final String CREATE_TABLE_SESSIONS = "CREATE TABLE " + TABLE_SESSION + "( " +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_ACTIVITY + " TEXT, " +
@@ -37,6 +41,15 @@ public class DBHandler extends SQLiteOpenHelper {
             COLUMN_STEPS_PER_SECOND + " DOUBLE" +
             ");";
 
+    private static final String CREATE_TABLE_ROUTES = "CREATE TABLE " + TABLE_ROUTES + "( " +
+//            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_COUNT + " INTEGER, " +
+            COLUMN_SESSIONID + " INTEGER, " +
+            COLUMN_LATITUDE + " DOUBLE, " +
+            COLUMN_LONGITUDE + " DOUBLE, " +
+            "FOREIGN KEY (" + COLUMN_SESSIONID + ") REFERENCES " + TABLE_SESSION+"("+COLUMN_ID+")"+
+            ");";
+
 
 
     public DBHandler (Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -46,6 +59,7 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_SESSIONS);
+        db.execSQL(CREATE_TABLE_ROUTES);
     }
 
     @Override
