@@ -13,36 +13,42 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <TextView
             android:text="Start time: "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvStartTimeLbl" />
+            android:id="@+id/tvStartTimeLbl"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:text="Duration: "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvDurationlbl" />
+            android:id="@+id/tvDurationlbl"
+            android:textColor="@android:color/black"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black">
 
         <TextView
             android:text="STARTTIME"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvStartTime" />
+            android:id="@+id/tvStartTime"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:text="DURATION"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvDuration" />
+            android:id="@+id/tvDuration"
+            android:textColor="@android:color/black"/>
     </LinearLayout>
 </LinearLayout>
