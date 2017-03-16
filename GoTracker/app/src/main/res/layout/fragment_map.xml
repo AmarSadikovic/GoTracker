@@ -20,6 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnNewSession"
-        android:layout_weight="1.13" />
+        android:layout_weight="1.13"
+        android:background="?attr/actionModeSplitBackground"
+        android:textColor="@android:color/background_light" />
 
 </LinearLayout>
