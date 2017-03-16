@@ -82,6 +82,7 @@ public class StartFrag extends Fragment {
         sensorStatus(((MainActivity)getActivity()).isGpsSensorPresent(), ((MainActivity)getActivity()).isStepSensorPresent());
         return view;
     }
+
     public void sensorStatus(boolean gps, boolean stepDetector){
         if(gps){
             ivGps.setImageResource(R.drawable.success);

@@ -28,4 +28,5 @@ public class MyServiceConnection implements ServiceConnection {
     public void onServiceDisconnected(ComponentName componentName) {
         main.serviceBound = false;
     }
+
 }

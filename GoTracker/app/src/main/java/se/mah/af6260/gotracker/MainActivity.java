@@ -200,6 +200,7 @@ public class MainActivity extends Activity {
         }
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = locationManager.getAllProviders();
+
         if (providers != null && providers.contains(LocationManager.NETWORK_PROVIDER)) {
             Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (loc != null) {

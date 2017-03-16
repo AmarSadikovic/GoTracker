@@ -95,6 +95,7 @@ public class RunService extends Service implements SensorEventListener, Location
         return null; //Home position
     }
 
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 

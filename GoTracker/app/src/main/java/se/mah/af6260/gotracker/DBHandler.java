@@ -139,6 +139,7 @@ public class DBHandler extends SQLiteOpenHelper {
             listSession.add(new Session(id, activity, startYear, startMonth, startDay, startTime, duration,
                     distance, steps, avgSpeed, route));
         }
+
         dbRead.close();
         return listSession;
     }

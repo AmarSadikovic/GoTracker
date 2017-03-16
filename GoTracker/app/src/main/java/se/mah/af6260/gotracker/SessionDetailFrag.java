@@ -77,4 +77,5 @@ public class SessionDetailFrag extends Fragment implements OnMapReadyCallback {
                     .color(Color.BLUE));
         }
     }
+
 }

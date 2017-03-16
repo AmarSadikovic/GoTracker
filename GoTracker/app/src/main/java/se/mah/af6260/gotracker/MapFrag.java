@@ -54,4 +54,5 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
             map.addMarker(new MarkerOptions().position(latLng).title("My position"));
         }
     }
+
 }

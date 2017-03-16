@@ -49,6 +49,7 @@ public class SessionAdapter extends ArrayAdapter<Session> {
         return convertView;
     }
 
+
     private class ViewHolder{
         ImageView ivActivity;
         TextView tvStarTime;

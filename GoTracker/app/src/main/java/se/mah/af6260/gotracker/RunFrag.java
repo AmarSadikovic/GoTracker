@@ -90,6 +90,7 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
             distanceInMeters += results[0];
             updateDistance(distanceInMeters);
         }
+
     }
 
     @Override

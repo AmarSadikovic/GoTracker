@@ -33,6 +33,7 @@ public class Session {
         this.routeArray = routeArray;
     }
 
+
     public Session(int id, String activityType, int startYear, int startMonth, int startDay, String startTime, String duration, String distance, int steps, double avgSpeed, ArrayList<LatLng> routeArray) {
         this.id = id;
         this.activityType = activityType;
