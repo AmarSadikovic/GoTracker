@@ -54,7 +54,7 @@
         android:id="@+id/btnStopRun"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:backgroundTint="?attr/actionModeSplitBackground" />
 
 </LinearLayout>
