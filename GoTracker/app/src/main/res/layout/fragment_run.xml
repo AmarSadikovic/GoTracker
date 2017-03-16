@@ -55,6 +55,7 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="14sp"
+        android:background="?attr/actionModeSplitBackground"
         android:backgroundTint="?attr/actionModeSplitBackground" />
 
 </LinearLayout>

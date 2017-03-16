@@ -22,6 +22,7 @@
         android:id="@+id/btnNewSession"
         android:layout_weight="1.13"
         android:background="?attr/actionModeSplitBackground"
+        android:backgroundTint="?attr/actionModeSplitBackground"
         android:textColor="@android:color/background_light" />
 
 </LinearLayout>

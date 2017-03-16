@@ -74,6 +74,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/sessionDelete"
         android:backgroundTint="@android:color/holo_red_dark"
+        android:background="@android:color/holo_red_dark"
         android:textColor="@android:color/white" />
 
 </LinearLayout>
