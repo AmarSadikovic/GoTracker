@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -73,7 +74,8 @@ public class SessionDetailFrag extends Fragment implements OnMapReadyCallback {
                 builder.setMessage("Do you really want to delete this session?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-
+                                ((MainActivity)getActivity()).getDBReference().deleteRun(session.getId());
+                                Toast.makeText(getActivity(), "Session deleted", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

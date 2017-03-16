@@ -162,4 +162,12 @@ public class DBHandler extends SQLiteOpenHelper {
         dbRead.close();
         return route;
     }
+
+
+    public void deleteRun(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM "+ TABLE_SESSION +" WHERE " + COLUMN_ID + "=" +id);
+        db.execSQL("DELETE FROM "+ TABLE_ROUTES +" WHERE " + COLUMN_SESSIONID + "=" +id);
+        db.close();
+    }
 }
