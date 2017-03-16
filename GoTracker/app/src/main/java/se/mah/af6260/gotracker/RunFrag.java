@@ -126,7 +126,15 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                     stopwatch = new Stopwatch();
                     stopwatch.startTimer();
                     Calendar cal = Calendar.getInstance();
-                    startTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+                    String hour = "" + Calendar.HOUR_OF_DAY;
+                    String  minute = "" + Calendar.MINUTE;
+                    if(Calendar.HOUR_OF_DAY < 10) {
+                       hour = "0" + Calendar.HOUR_OF_DAY;
+                    }
+                    if(Calendar.MINUTE < 10){
+                        minute = "0" + Calendar.MINUTE;
+                    }
+                    startTime = hour + ":" + minute;
 //                    startTimeMillis = System.currentTimeMillis();
                     updateUI();
                     startPosition =  ((MainActivity)getActivity()).getLocation();
