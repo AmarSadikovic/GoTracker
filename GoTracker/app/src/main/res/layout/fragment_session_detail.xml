@@ -9,7 +9,7 @@
         android:name="com.google.android.gms.maps.MapFragment"
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="340dp"
+        android:layout_height="300dp"
         tools:ignore="RtlHardcoded"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"/>
@@ -67,5 +67,12 @@
         android:id="@+id/tvAverageSpeedSessionDetail"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
+
+    <Button
+        android:text="Delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sessionDelete"
+        android:backgroundTint="@android:color/holo_red_dark" />
 
 </LinearLayout>
