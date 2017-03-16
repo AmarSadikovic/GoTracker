@@ -125,6 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnStartRun"
+        android:background="?attr/actionModeSplitBackground"
         android:backgroundTint="?attr/actionModeSplitBackground"
         android:layout_alignParentBottom="true"
         android:layout_weight="0.17"
