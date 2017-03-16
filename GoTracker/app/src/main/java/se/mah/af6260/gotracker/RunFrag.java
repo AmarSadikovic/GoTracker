@@ -123,6 +123,9 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                     updateUI();
                     startPosition =  ((MainActivity)getActivity()).getLocation();
                     route.add(startPosition);
+                    route.add(new LatLng(55.6910332, 13.1791068));
+                    route.add(new LatLng(56.6910332, 14.1791068));
+                    route.add(new LatLng(57.6910332, 15.1791068));
                     btnStartStop.setText("STOP RUN");
                     isStarted = true;
                 }else if(isStarted){

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -101,6 +102,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     private void newRoute(int id, Session session){
+
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         ArrayList<LatLng> list = session.getRouteArray();
@@ -108,6 +110,7 @@ public class DBHandler extends SQLiteOpenHelper {
             values.put(COLUMN_SESSIONID, id);
             values.put(COLUMN_LATITUDE, list.get(i).latitude);
             values.put(COLUMN_LONGITUDE, list.get(i).longitude);
+            db.insert(TABLE_ROUTES,null,values);
         }
         values.put(COLUMN_SESSIONID, id);
         values.put(COLUMN_LATITUDE, list.get(list.size()-1).latitude);
@@ -148,13 +151,14 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<LatLng> route = new ArrayList<LatLng>();
         SQLiteDatabase dbRead = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_ROUTES + " WHERE " +
-                COLUMN_SESSIONID + " = " + id;
+                COLUMN_SESSIONID + "=" + id;
         Cursor cursor = dbRead.rawQuery(query, null);
         while(cursor.moveToNext()){
             double longitude = cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE));
             double latitude = cursor.getDouble(cursor.getColumnIndex(COLUMN_LATITUDE));
             route.add(new LatLng(latitude, longitude));
         }
+        Log.v("SIZE DB", route.size()+ "");
         dbRead.close();
         return route;
     }

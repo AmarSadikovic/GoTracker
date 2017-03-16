@@ -4,6 +4,7 @@ package se.mah.af6260.gotracker;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class SessionDetailFrag extends Fragment implements OnMapReadyCallback {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(route.get(0), 15.0f));
         }
         for(int i = 0; i<route.size()-1; i++){
+
             map.addPolyline(new PolylineOptions()
                     .add(route.get(i), route.get(i+1))
                     .width(15)
