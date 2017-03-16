@@ -48,7 +48,7 @@
         android:textSize="20sp" />
 
     <Button
-        android:text="START RUN"
+        android:text="START SESSION!"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnStopRun"
