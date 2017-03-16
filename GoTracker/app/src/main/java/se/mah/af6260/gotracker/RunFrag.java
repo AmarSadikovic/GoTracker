@@ -2,6 +2,8 @@ package se.mah.af6260.gotracker;
 
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -48,8 +52,8 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     private Button btnStartStop;
     private Boolean isStarted = false;
     private String startTime;
-    private String duration, distanceString;
-    private double avgSpeed = 1337;
+    private String duration, distanceString = "0";
+    private double avgSpeed = 0;
 
     public RunFrag() {
         // Required empty public constructor
@@ -63,6 +67,10 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
 
 
         }
+    }
+
+    public boolean isStarted(){
+        return isStarted;
     }
 
     public void updateTimer(String timer) {
@@ -123,19 +131,38 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
                     updateUI();
                     startPosition =  ((MainActivity)getActivity()).getLocation();
                     route.add(startPosition);
-                    route.add(new LatLng(55.6910332, 13.1791068));
-                    route.add(new LatLng(56.6910332, 14.1791068));
-                    route.add(new LatLng(57.6910332, 15.1791068));
                     btnStartStop.setText("STOP RUN");
                     isStarted = true;
+                    ((MainActivity)getActivity()).setIsSessionStarted(true);
                 }else if(isStarted){
                     handler.removeCallbacks(runnable);
+                    long timer = (System.nanoTime() - stopwatch.getStartTime()) / 1000000000;
+                    if(distanceInMeters > 0 || timer > 0) {
+                        avgSpeed = distanceInMeters / timer;
+                    } else {
+                        avgSpeed = 0;
+                    }
                     stopwatch.stopTimer();
                     saveResultToDatabase();
-                    ((MainActivity) getActivity()).unbindRunService();
-                    ((MainActivity) getActivity()).setStartFrag();
                     btnStartStop.setText("START RUN");
                     isStarted = false;
+                    ((MainActivity)getActivity()).setIsSessionStarted(false);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Your session: " +
+                            "\nActivity: " + ((MainActivity) getActivity()).getActivityType() +
+                            "\nStart Time: " + startTime +
+                            "\nDuration: " + duration +
+                            "\nDistance: " + distanceString +
+                            "\nSteps: " + stepsTaken +
+                            "\nAverage Speed: " + avgSpeed)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    ((MainActivity) getActivity()).unbindRunService();
+                    ((MainActivity) getActivity()).setStartFrag();
                 }
             }
         });
@@ -146,7 +173,6 @@ public class RunFrag extends Fragment implements OnMapReadyCallback {
     private void saveResultToDatabase() {
         DBHandler dbHandler = ((MainActivity)getActivity()).getDBReference();
         LocalDate to = new LocalDate(System.currentTimeMillis());
-        Log.v("TO DATABASE ", to.getYear() + " MONTH " + to.getMonthOfYear() + " DAY " + to.getDayOfMonth());
         dbHandler.newSession(new Session(((MainActivity) getActivity()).getActivityType(),
                 to.getYear(), to.getMonthOfYear(), to.getDayOfMonth(), startTime, duration, distanceString, stepsTaken, avgSpeed, route));
     }

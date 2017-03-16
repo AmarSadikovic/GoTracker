@@ -76,6 +76,7 @@ public class SessionDetailFrag extends Fragment implements OnMapReadyCallback {
                             public void onClick(DialogInterface dialog, int id) {
                                 ((MainActivity)getActivity()).getDBReference().deleteRun(session.getId());
                                 Toast.makeText(getActivity(), "Session deleted", Toast.LENGTH_SHORT).show();
+                                ((MainActivity)getActivity()).setSessionsFrag();
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -46,7 +46,6 @@ public class RunService extends Service implements SensorEventListener, Location
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
             stepDetectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-            Toast.makeText(this, "Sensor Found", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Sensor not found", Toast.LENGTH_SHORT).show();
         }
@@ -63,7 +62,6 @@ public class RunService extends Service implements SensorEventListener, Location
         this.main = main;
         if(!main.isCycling()) {
             sensorManager.registerListener(this, stepDetectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
-            Toast.makeText(this, "Listener Register", Toast.LENGTH_SHORT).show();
         }
     }
 

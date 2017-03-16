@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -49,6 +51,9 @@ public class SessionsFrag extends Fragment  {
         tvStartTime = (TextView)v.findViewById(R.id.tvStartTime);
         tvDuration = (TextView)v.findViewById(R.id.tvDuration);
         listView = (ListView)v.findViewById(R.id.lvSessionInfo);
+        LocalDate to = new LocalDate(System.currentTimeMillis());
+        listSessions = dbHandler.getFullSession(to.getYear(), to.getMonthOfYear(), to.getDayOfMonth());
+        listView.setAdapter(new SessionAdapter(getActivity(), listSessions));
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int years, int months, int dayOfMonth) {

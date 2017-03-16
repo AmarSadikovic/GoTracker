@@ -16,10 +16,8 @@ public class Stopwatch {
         isRunning = true;
     }
 
-    public long getHour(){
-        long currentNanoSeconds = System.nanoTime() - startNanoSeconds;
-        long hrs = (long)(((currentNanoSeconds/1000000000)/60)/60);
-        return hrs;
+    public long getStartTime(){
+        return startNanoSeconds;
     }
 
     public String getTime(){

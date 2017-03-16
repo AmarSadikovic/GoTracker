@@ -21,6 +21,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
+import android.os.Handler;
 
 public class MainActivity extends Activity {
 
@@ -39,6 +40,8 @@ public class MainActivity extends Activity {
     private TabLayout tabLayout;
     private Session selectedSession;
 
+    private boolean isSessionStarted = false;
+
 
     public boolean isStepSensorPresent() {
 
@@ -48,6 +51,10 @@ public class MainActivity extends Activity {
     public boolean isGpsSensorPresent() {
 
         return isGpsSensorPresent;
+    }
+
+    public void setIsSessionStarted(boolean bool){
+        isSessionStarted = bool;
     }
 
     @Override
@@ -69,12 +76,25 @@ public class MainActivity extends Activity {
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
                 if(pos == 0){
-                    setFragment(mapFrag, false);
+                    if(!isSessionStarted) {
+                        setFragment(mapFrag, false);
+                    } else{
+                        tabLayout.getTabAt(2).select();
+                    }
+
                 } else if (pos == 1){
-                    setFragment(sessionsFrag, false);
+                    if(!isSessionStarted) {
+                        setFragment(sessionsFrag, false);
+                    } else {
+                        tabLayout.getTabAt(2).select();
+                    }
 
                 } else if (pos == 2){
-                    setStartFrag();
+                    if(!isSessionStarted) {
+                        setStartFrag();
+                    } else {
+                        tabLayout.getTabAt(2).select();
+                    }
                 }
             }
 
@@ -156,6 +176,10 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void setSessionsFrag(){
+        setFragment(sessionsFrag, false);
+    }
+
     public String getActivityType(){
         String ret = "";
         if(isRunning){
@@ -220,6 +244,8 @@ public class MainActivity extends Activity {
         transaction.replace(R.id.fl, frag);
         if(backstack){
             transaction.addToBackStack(null);
+        } else {
+            fm.popBackStack();
         }
         transaction.commit();
         fm.executePendingTransactions();
@@ -237,5 +263,28 @@ public class MainActivity extends Activity {
     public void setCycling(boolean cycling) {isCycling = cycling;}
 
     private boolean isRunning = true, isWalking = false, isCycling = false;
+
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        //Checking for fragment count on backstack
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else if (!doubleBackToExitPressedOnce) {
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this,"Press back again to leave", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        } else {
+            super.onBackPressed();
+            return;
+        }
+    }
 
 }
